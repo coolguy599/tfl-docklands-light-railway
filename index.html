@@ -1,1 +1,41 @@
+<audio id="audioPlayer" controls></audio>
 
+<script>
+  const player = document.getElementById('audioPlayer');
+  
+  // Create a list of all files from 16385 to 16577
+  let playlist = [];
+  for (let i = 16385; i <= 16577; i++) {
+    // Define the skip ranges and specific files
+    const isSkipped = 
+      (i >= 16538 && i <= 16566) ||
+      (i >= 16492 && i <= 16511) ||
+      (i >= 16476 && i <= 16478) ||
+      (i === 16470) ||
+      (i >= 16464 && i <= 16465) ||
+      (i >= 16445 && i <= 16451);
+
+    if (!isSkipped) {
+      playlist.push(i + ".MP3");
+    }
+  }
+
+  let currentIndex = 0;
+
+  // Function to play the next file
+  function playNext() {
+    if (currentIndex < playlist.length) {
+      player.src = playlist[currentIndex];
+      player.play();
+      currentIndex++;
+    }
+  }
+
+  // Event listener to trigger next song when current one ends
+  player.addEventListener('ended', playNext);
+
+  // Initialize: Load the first file
+  if (playlist.length > 0) {
+    player.src = playlist[0];
+  }
+</script>
